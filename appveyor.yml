@@ -2,7 +2,6 @@ os: Windows Server 2012 R2
 platform:
   - x64
 
-
 # Use this to preseve the build VM after the build finishes.
 # Note that the appveyor builds will appear to hang; check the build log for details.
 # https://www.appveyor.com/docs/how-to/rdp-to-build-worker/
@@ -12,18 +11,21 @@ platform:
 environment:
   matrix:
     - name: unit-tests-ruby-2.4.4
-      ruby_version: "24"
-    - name: unit-tests-ruby-2.5.1
-      ruby_version: "25"
+      ruby_version: "24-x64"
+    - name: unit-tests-ruby-2.5
+      ruby_version: "25-x64"
+    - name: unit-tests-ruby-2.6
+      ruby_version: "26-x64"
     - name: functional-tests-1
-      ruby_version: "25"
+      ruby_version: "26-x64"
     - name: functional-tests-2
-      ruby_version: "25"
+      ruby_version: "26-x64"
     - name: functional-tests-3
-      ruby_version: "25"
+      ruby_version: "26-x64"
 clone_folder: c:\projects\inspec
 clone_depth: 1
-
+# Disable MSBuild mode entirely
+build: off
 skip_commits:
   # version bumps by Expeditor happen as a separate commit after the merge, we can skip
   author: Chef Expeditor
@@ -42,6 +44,7 @@ skip_tags: true
 branches:
   only:
     - master
+    - 3-stable
 
 cache:
   - vendor/bundle -> appveyor.yml
